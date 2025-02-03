@@ -1,0 +1,66 @@
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '2.9.3'
+}
+
+group 'org.tsb'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    allureVersion = '2.29.0'
+    junitVersion = '5.11.3'
+    appiumJavaClientVersion = '8.3.0'
+    seleniumVersion = '4.10.0'
+}
+
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    // Appium Java Client
+    implementation "io.appium:java-client:${appiumJavaClientVersion}"
+
+    // Selenium
+    implementation "org.seleniumhq.selenium:selenium-java:${seleniumVersion}"
+
+    // Apache Commons Lang
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+
+    implementation 'org.slf4j:slf4j-simple:2.0.7'
+
+
+    // JUnit
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+
+    // Allure
+    testImplementation "io.qameta.allure:allure-selenide:${allureVersion}"
+}
+
+configurations.all {
+    resolutionStrategy {
+        // Принудительно использовать правильную версию Selenium
+        force "org.seleniumhq.selenium:selenium-java:${seleniumVersion}"
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+allure {
+    autoconfigure = true
+    version = "${allureVersion}"
+
+    useJUnit5 {
+        version = "${allureVersion}"
+    }
+}
