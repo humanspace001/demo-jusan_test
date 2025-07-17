@@ -7,6 +7,7 @@ group 'org.tsb'
 version '1.0-SNAPSHOT'
 
 repositories {
+    google()
     mavenCentral()
 }
 
@@ -15,6 +16,9 @@ ext {
     junitVersion = '5.11.3'
     appiumJavaClientVersion = '8.3.0'
     seleniumVersion = '4.10.0'
+    restAssuredVersion = '5.4.0'
+    assertjVersion = '3.24.2'
+    jsonVersion = '20240303'
 }
 
 sourceCompatibility = '17'
@@ -25,24 +29,32 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 dependencies {
-    // Appium Java Client
+
+
+    implementation "androidx.test.uiautomator:uiautomator:2.2.0"
     implementation "io.appium:java-client:${appiumJavaClientVersion}"
-
-    // Selenium
     implementation "org.seleniumhq.selenium:selenium-java:${seleniumVersion}"
-
-    // Apache Commons Lang
+    implementation "io.rest-assured:rest-assured:${restAssuredVersion}"
+    implementation "io.rest-assured:json-path:${restAssuredVersion}"
+    implementation "io.rest-assured:xml-path:${restAssuredVersion}"
     implementation 'org.apache.commons:commons-lang3:3.12.0'
-
+    implementation "org.json:json:${jsonVersion}"
     implementation 'org.slf4j:slf4j-simple:2.0.7'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
+
+    implementation 'org.json:json:20240303'
 
 
-    // JUnit
+    testImplementation "org.assertj:assertj-core:${assertjVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
-
-    // Allure
     testImplementation "io.qameta.allure:allure-selenide:${allureVersion}"
+    testImplementation 'org.junit.platform:junit-platform-suite:1.9.2'
+    testImplementation 'org.assertj:assertj-core:3.25.1'
+  
 }
 
 configurations.all {
